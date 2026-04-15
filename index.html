@@ -30,6 +30,9 @@
     <!-- Hero Section -->
     <section class="hero" id="home" data-reveal>
         <div class="container hero-content">
+            <div class="typewriter-container">
+                <span id="typewriter" class="typewriter-text"></span><span class="cursor"></span>
+            </div>
             <h1>Master Sanskrit with<br>18 Years of Excellence</h1>
             <p>Join the classes behind 30+ Centum scorers since 2008.</p>
             <div class="hero-actions" style="display: flex; gap: 20px; justify-content: center; align-items: center; flex-wrap: wrap;">
@@ -222,6 +225,33 @@
         }, observerOptions);
 
         document.querySelectorAll('[data-reveal]').forEach(el => observer.observe(el));
+
+        // Typewriter Animation Logic
+        const typewriterElement = document.getElementById('typewriter');
+        const textToType = "विद्ययाऽमृतमश्नुते।";
+        let charIndex = 0;
+
+        function type() {
+            typewriterElement.textContent = currentText;
+            
+            if (!isDeleting && currentText === textToType) {
+                // Pause at the end of typing
+                typingSpeed = 3000;
+                isDeleting = true;
+            } else if (isDeleting && currentText === "") {
+                isDeleting = false;
+                typingSpeed = 500;
+                charIndex = 0;
+            } else {
+                typingSpeed = isDeleting ? 70 : 150;
+                charIndex = isDeleting ? charIndex - 1 : charIndex + 1;
+            }
+
+            setTimeout(type, typingSpeed);
+        }
+
+        // Start typewriter after a small initial delay
+        setTimeout(type, 1000);
 
         // Global Configuration for WhatsApp
         const CONFIG = {
