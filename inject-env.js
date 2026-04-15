@@ -1,4 +1,3 @@
-const fs = require('fs-extra'); // We might need to install this or use native fs
 const fsNative = require('fs');
 const path = require('path');
 
