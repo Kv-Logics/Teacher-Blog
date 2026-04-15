@@ -1,0 +1,11 @@
+{
+  "name": "teacher-site",
+  "version": "1.0.0",
+  "description": "Redesigned Sanskrit Teacher Portfolio with Vercel build-time environment injection.",
+  "scripts": {
+    "build": "node inject-env.js"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}
