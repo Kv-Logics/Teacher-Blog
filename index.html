@@ -231,7 +231,7 @@
         const textToType = "विद्ययाऽमृतमश्नुते।";
         let charIndex = 0;
         let isDeleting = false;
-        let typingSpeed = 150;
+        let typingSpeed = 200; // Slower initial speed
 
         function type() {
             const currentText = isDeleting 
@@ -241,15 +241,16 @@
             typewriterElement.textContent = currentText;
             
             if (!isDeleting && currentText === textToType) {
-                // Pause at the end of typing
-                typingSpeed = 3000;
+                // Wait longer when full line is typed
+                typingSpeed = 4000;
                 isDeleting = true;
             } else if (isDeleting && currentText === "") {
                 isDeleting = false;
-                typingSpeed = 500;
+                typingSpeed = 800;
                 charIndex = 0;
             } else {
-                typingSpeed = isDeleting ? 70 : 150;
+                // Slower typing and erasing
+                typingSpeed = isDeleting ? 100 : 250;
                 charIndex = isDeleting ? charIndex - 1 : charIndex + 1;
             }
 
@@ -257,10 +258,7 @@
         }
 
         // Start typewriter after a small initial delay
-        setTimeout(type, 1000);
-
-        // Start typewriter after a small initial delay
-        setTimeout(type, 1000);
+        setTimeout(type, 1500);
 
         // Global Configuration for WhatsApp
         const CONFIG = {
