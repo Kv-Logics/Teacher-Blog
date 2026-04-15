@@ -17,18 +17,30 @@ if (!fsNative.existsSync(distDir)) {
 // 2. Helper to copy files/folders recursively (native version for zero dependencies)
 function copyRecursiveSync(src, dest) {
     const exists = fsNative.existsSync(src);
-    const stats = exists && fsNative.statSync(src);
-    const isDirectory = exists && stats.isDirectory();
+    if (!exists) return;
+
+    // Skip build-related files and the destination directory itself
+    const basename = path.basename(src);
+    if (
+        basename === 'public' || 
+        basename === 'node_modules' || 
+        basename === '.git' || 
+        basename === 'inject-env.js' || 
+        basename === 'package.json' || 
+        basename === 'package-lock.json'
+    ) {
+        return;
+    }
+
+    const stats = fsNative.statSync(src);
+    const isDirectory = stats.isDirectory();
+
     if (isDirectory) {
         if (!fsNative.existsSync(dest)) fsNative.mkdirSync(dest);
         fsNative.readdirSync(src).forEach(childItemName => {
             copyRecursiveSync(path.join(src, childItemName), path.join(dest, childItemName));
         });
     } else {
-        // Skip build-related files in the output
-        if (src.endsWith('inject-env.js') || src.endsWith('package.json') || src.endsWith('package-lock.json') || src.includes('.git') || src.includes('public')) {
-            return;
-        }
         fsNative.copyFileSync(src, dest);
     }
 }
