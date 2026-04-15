@@ -230,8 +230,14 @@
         const typewriterElement = document.getElementById('typewriter');
         const textToType = "विद्ययाऽमृतमश्नुते।";
         let charIndex = 0;
+        let isDeleting = false;
+        let typingSpeed = 150;
 
         function type() {
+            const currentText = isDeleting 
+                ? textToType.substring(0, charIndex - 1) 
+                : textToType.substring(0, charIndex + 1);
+            
             typewriterElement.textContent = currentText;
             
             if (!isDeleting && currentText === textToType) {
@@ -249,6 +255,9 @@
 
             setTimeout(type, typingSpeed);
         }
+
+        // Start typewriter after a small initial delay
+        setTimeout(type, 1000);
 
         // Start typewriter after a small initial delay
         setTimeout(type, 1000);
